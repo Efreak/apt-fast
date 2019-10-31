@@ -2,7 +2,7 @@
 set -e
 
 apt_fast_installation() {
-  if ! dpkg-query --show aria2 >/dev/null 2>&1; then
+  if ! dpkg-query --show aria2 ncurses-utils>/dev/null 2>&1; then
     apt-get update
     apt-get install -y aria2
   fi

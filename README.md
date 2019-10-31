@@ -74,10 +74,10 @@ chmod +x $PREFIX/bin/apt-fast
 cp apt-fast.conf $PREFIX/etc
 ```
 
-You need to have [aria2c](http://aria2.sourceforge.net/) installed:
+You need to have [aria2c](http://aria2.sourceforge.net/) and ncurses-utils installed:
 
 ```sh
-apt-get install aria2
+apt-get install aria2 ncurses-utils
 ```
 
 Then simply run apt-fast instead of apt-get or aptitude.
