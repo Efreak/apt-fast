@@ -50,41 +50,11 @@ Installation
 ------------
 
 ```sh
-sudo add-apt-repository ppa:apt-fast/stable
-sudo apt-get update
-sudo apt-get -y install apt-fast
+wget https://github.com/Efreak/termux-apt-fast/raw/master/quick-install.sh
+bash quick-install.sh
 ```
 
-### Ubuntu PPA ###
-You can use the Ubuntu PPA to get a graphical configuration file setup and automatic updates, for details see:
-
-* [ppa:apt-fast/stable](https://code.launchpad.net/~apt-fast/+archive/stable)
-
-
-### Debian and derivates ###
-Some distros, such as PCLinuxOS include apt-fast in their repositories. However if not included like in Debian or Kali Linux, then the PPA can be manually added by creating a new file `/etc/apt/sources.list.d/apt-fast.list`:
-
-```
-deb http://ppa.launchpad.net/apt-fast/stable/ubuntu bionic main 
-deb-src http://ppa.launchpad.net/apt-fast/stable/ubuntu bionic main
-```
-
-To install apt-fast execute following commands as root:
-```bash
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A2166B8DE8BDC3367D1901C11EE2FF37CA8DA16B
-apt-get update
-apt-get install apt-fast
-```
-
-Note that the PPA version ``bionic`` might need to be updated with the recent Ubuntu LTS codename to stay up-to-date.
-
-
-### Interaction-free installation ###
-To install apt-fast without interaction execute the following commands as root after adding the package sources to the sources.list:
-
-```bash
-DEBIAN_FRONTEND=noninteractive apt-get install -y apt-fast
-```
+### Interaction-free configuration ###
 
 To update specific configuration values use the debconf command line interface as root, e.g.:
 
@@ -94,21 +64,14 @@ echo debconf apt-fast/dlflag boolean true | debconf-set-selections
 echo debconf apt-fast/aptmanager string apt-get | debconf-set-selections
 ```
 
-
-### Quick install ###
-You can quickly install `apt-fast` by running:
-
-```bash
-/bin/bash -c "$(curl -sL https://git.io/vokNn)"
-```
-
 ### Manual ###
 A manual install can be performed as such:
 
 ```sh
-cp apt-fast /usr/local/sbin/
-chmod +x /usr/local/sbin/apt-fast
-cp apt-fast.conf /etc
+cp apt-fast $PREFIX/local/sbin/
+mkdir -p $PREFIX/local/sbin
+chmod +x $PREFIX/local/sbin/apt-fast
+cp apt-fast.conf $PREFIX/etc
 ```
 
 You need to have [aria2c](http://aria2.sourceforge.net/) installed:
@@ -124,41 +87,38 @@ Then simply run apt-fast instead of apt-get or aptitude.
 #### Bash ####
 
 ```sh
-cp completions/bash/apt-fast /etc/bash_completion.d/
-chown root:root /etc/bash_completion.d/apt-fast
-. /etc/bash_completion
+cp completions/bash/apt-fast $PREFIX/etc/bash_completion.d/
+. $PREFIX/etc/bash_completion
 ```
 
 #### Zsh ####
 
 ```sh
-cp completions/zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/
-chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
-source /usr/share/zsh/functions/Completion/Debian/_apt-fast
+cp completions/zsh/_apt-fast $PREFIX/usr/share/zsh/functions/Completion/Debian/
+source $PREFIX/usr/share/zsh/functions/Completion/Debian/_apt-fast
 ```
 
 #### Fish ####
 
 ```fish
-cp completions/fish/apt-fast.fish /etc/fish/conf.d/completions/
-chown root:root /etc/fish/conf.d/completions/apt-fast.fish
-source /etc/fish/conf.d/completions/apt-fast.fish
+cp completions/fish/apt-fast.fish $PREFIX/etc/fish/conf.d/completions/
+source $PREFIX/etc/fish/conf.d/completions/apt-fast.fish
 ```
 
 ### Man page installation ###
 
 ```sh
-mkdir -p /usr/local/share/man/man8/
-cp ./man/apt-fast.8 /usr/local/share/man/man8
-gzip -f9 /usr/local/share/man/man8/apt-fast.8
-mkdir -p /usr/local/share/man/man5/
-cp ./man/apt-fast.conf.5 /usr/local/share/man/man5
-gzip -f9 /usr/local/share/man/man5/apt-fast.conf.5
+mkdir -p $PREFIX/local/share/man/man8/
+cp ./man/apt-fast.8 $PREFIX/local/share/man/man8
+gzip -f9 $PREFIX/local/share/man/man8/apt-fast.8
+mkdir -p $PREFIX/local/share/man/man5/
+cp ./man/apt-fast.conf.5 $PREFIX/local/share/man/man5
+gzip -f9 $PREFIX/local/share/man/man5/apt-fast.conf.5
 ```
 
 Configuration
 -------------
-The apt-fast configuration file is located at: `/etc/apt-fast.conf`
+The apt-fast configuration file is located at: `$PREFIX/etc/apt-fast.conf`
 
 
 ### Package manager ###
@@ -232,7 +192,7 @@ Set to piece selection algorithm to use. Possible values: default, inorder, geom
 
 ### Downloadmanager file ###
 ```sh
-DLLIST='/tmp/apt-fast.list'
+DLLIST='$PREFIX/tmp/apt-fast.list'
 ```
 Location of aria2c input file, used to download the packages with options and checksums.
 
@@ -249,14 +209,14 @@ apt-fast uses APT's proxy settings (`Acquire::http::proxy`, `Acquire::https::pro
 
 ### Download folder ###
 ```sh
-DLDIR='/var/cache/apt/apt-fast'
+DLDIR='$PREFIX/var/cache/apt/apt-fast'
 ```
 Directory where apt-fast (temporarily) downloads the packages.
 
 
 ### APT archives cache ###
 ```sh
-APTCACHE='/var/cache/apt/archives'
+APTCACHE='$PREFIX/var/cache/apt/archives'
 ```
 Directory where apt-get and aptitude download packages.
 

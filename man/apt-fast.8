@@ -86,13 +86,13 @@ Automatic "no" to all prompts. Unsets \fBDOWNLOADBEFORE\fR configuration
 item.
 .SH "FILES"
 .TP
-/etc/apt\-fast.conf
+$PREFIX/etc/apt\-fast.conf
 Configuration file. See \fBapt\-fast.conf\fR(5) for detailed description.
 .TP
-/tmp/apt-fast.list
+$PREFIX/tmp/apt-fast.list
 Temporary download list file. Configuration item: \fBDLLIST\fR
 .TP
-/var/cache/apt/apt-file/
+$PREFIX/var/cache/apt/apt-file/
 Temporary download location where download accelerator retrieves packages
 before \fBapt\-fast\fR moves them to package cache. Configuration item:
 \fBDLDIR\fR
