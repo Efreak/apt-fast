@@ -7,11 +7,11 @@ apt_fast_installation() {
     apt-get install -y aria2
   fi
 
-  mkdir -p $PREFIX/local/sbin $PREFIX/etc
-  wget https://raw.githubusercontent.com/ilikenwf/apt-fast/master/apt-fast -O $PREFIX/local/sbin/apt-fast
-  chmod +x /usr/local/sbin/apt-fast
-  if ! [[ -f /etc/apt-fast.conf ]]; then
-    wget https://raw.githubusercontent.com/ilikenwf/apt-fast/master/apt-fast.conf -O $PREFIX/etc/apt-fast.conf
+  mkdir -p $PREFIX/bin $PREFIX/etc
+  wget https://raw.githubusercontent.com/efreak/apt-fast/master/apt-fast -O $PREFIX/bin/apt-fast
+  chmod +x $PREFIX/bin/apt-fast
+  if ! [[ -f $PREFIX/etc/apt-fast.conf ]]; then
+    wget https://raw.githubusercontent.com/efreak/apt-fast/master/apt-fast.conf -O $PREFIX/etc/apt-fast.conf
   fi
 }
 

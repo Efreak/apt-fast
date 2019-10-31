@@ -19,7 +19,7 @@ _apt_fast()
     if [ -n "$special" ]; then
         case $special in
             remove|autoremove|purge)
-                if [ -f /etc/debian_version ]; then
+                if [ -f $PREFIX/etc/debian_version ]; then
                     # Debian system
                     COMPREPLY=( $( _xfunc dpkg _comp_dpkg_installed_packages "$cur" ) )
                 else

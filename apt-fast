@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 #
 # apt-fast v1.9
 # Use this just like aptitude or apt-get for faster package downloading.
@@ -34,7 +34,7 @@ msg(){
 }
 
 # Search for known options and decide if root privileges are needed.
-root=1  # default value: we need root privileges
+root=0  # default value: we never need root privileges in termux
 option=
 for argument in "$@"; do
   case "$argument" in
@@ -110,11 +110,11 @@ fi
 
 
 # Define lockfile.
-# Use /tmp as directory because everybody (not only root) has to have write
+# Use $PREFIX/tmp as directory because everybody (not only root) has to have write
 # permissions.
 # We need lock for non-root commands too, because we only have one download
 # list file.
-LCK_FILE="/tmp/apt-fast"
+LCK_FILE="$PREFIX/tmp/apt-fast"
 LCK_FD=99
 
 # Set default package manager, APT cache, temporary download dir,
@@ -130,7 +130,7 @@ else
 fi
 # Currently not needed.
 eval "$(apt-config shell LISTDIR Dir::State::lists/d)"
-DLLIST="/tmp/apt-fast.list"
+DLLIST="$PREFIX/tmp/apt-fast.list"
 _MAXNUM=5
 _MAXCONPERSRV=10
 _SPLITCON=8
@@ -161,7 +161,7 @@ VERBOSE_OUTPUT=
 _DOWNLOADER='aria2c --no-conf -c -j ${_MAXNUM} -x ${_MAXCONPERSRV} -s ${_SPLITCON} -i ${DLLIST} --min-split-size=${_MINSPLITSZ} --stream-piece-selector=${_PIECEALGO} --connect-timeout=600 --timeout=600 -m0 --header "Accept: */*"'
 
 # Load config file.
-CONFFILE="/etc/apt-fast.conf"
+CONFFILE="$PREFIX/etc/apt-fast.conf"
 if [ -e "$CONFFILE" ]; then
     source "$CONFFILE"
 fi
@@ -350,7 +350,7 @@ get_uris(){
 
     ## whole uri comes encoded (urlencoded). Filename must NOT be decoded because
     # plain aptitude do not decode it when download and install it. Therefore, we
-    # will have ugly named packages at /var/cache/apt/archives but is the standard
+    # will have ugly named packages at $PREFIX/var/cache/apt/archives but is the standard
     # behavior.
     # But package version must be decoded, otherways package=version calls will
     # not work.
@@ -540,7 +540,7 @@ if [ "$option" == "install" ]; then
   get_uris "$@"
 
   [ -t 1 ] && [ -n "$REMOVE_WORKING_MESSAGE" ] && tput cuu 1 && tput el && tput cuu 1
-  # Test /tmp/apt-fast.list file exists and not just the apt-fast comment line.
+  # Test $PREFIX/tmp/apt-fast.list file exists and not just the apt-fast comment line.
   # Then download all files from the list.
   if [ -f "$DLLIST" ] && [ "$(wc -l "$DLLIST" | cut -d' ' -f1)" -gt 1 ] && [ ! "$DOWNLOADBEFORE" ]; then
     display_downloadfile

@@ -68,9 +68,9 @@ echo debconf apt-fast/aptmanager string apt-get | debconf-set-selections
 A manual install can be performed as such:
 
 ```sh
-cp apt-fast $PREFIX/local/sbin/
-mkdir -p $PREFIX/local/sbin
-chmod +x $PREFIX/local/sbin/apt-fast
+cp apt-fast $PREFIX/bin/
+mkdir -p $PREFIX/bin
+chmod +x $PREFIX/bin/apt-fast
 cp apt-fast.conf $PREFIX/etc
 ```
 
@@ -94,8 +94,8 @@ cp completions/bash/apt-fast $PREFIX/etc/bash_completion.d/
 #### Zsh ####
 
 ```sh
-cp completions/zsh/_apt-fast $PREFIX/usr/share/zsh/functions/Completion/Debian/
-source $PREFIX/usr/share/zsh/functions/Completion/Debian/_apt-fast
+cp completions/zsh/_apt-fast $PREFIX/share/zsh/functions/Completion/Debian/
+source $PREFIX/share/zsh/functions/Completion/Debian/_apt-fast
 ```
 
 #### Fish ####
@@ -108,12 +108,12 @@ source $PREFIX/etc/fish/conf.d/completions/apt-fast.fish
 ### Man page installation ###
 
 ```sh
-mkdir -p $PREFIX/local/share/man/man8/
-cp ./man/apt-fast.8 $PREFIX/local/share/man/man8
-gzip -f9 $PREFIX/local/share/man/man8/apt-fast.8
-mkdir -p $PREFIX/local/share/man/man5/
-cp ./man/apt-fast.conf.5 $PREFIX/local/share/man/man5
-gzip -f9 $PREFIX/local/share/man/man5/apt-fast.conf.5
+mkdir -p $PREFIX/share/man/man8/
+cp ./man/apt-fast.8 $PREFIX/share/man/man8
+gzip -f9 $PREFIX/share/man/man8/apt-fast.8
+mkdir -p $PREFIX/share/man/man5/
+cp ./man/apt-fast.conf.5 $PREFIX/share/man/man5
+gzip -f9 $PREFIX/share/man/man5/apt-fast.conf.5
 ```
 
 Configuration
